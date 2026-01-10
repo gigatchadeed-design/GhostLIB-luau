@@ -3,179 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghost Lib UI - Documentation</title>
+    <title>Ghost Lib UI | Documentation</title>
     <style>
         :root {
-            --bg-color: #0f0f0f;
-            --sidebar-color: #161616;
-            --accent-color: #cccccc;
-            --text-color: #e0e0e0;
-            --code-bg: #1e1e1e;
-            --border-color: #2a2a2a;
+            --bg-color: #0b0b0b;
+            --sidebar-color: #111111;
+            --accent-color: #c9c9c9;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --code-bg: #161616;
+            --border: #222222;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
             display: flex;
+            line-height: 1.6;
         }
 
-        /* Sidebar */
+        /* Sidebar Navigation */
         .sidebar {
-            width: 250px;
+            width: 280px;
             background-color: var(--sidebar-color);
             height: 100vh;
             position: fixed;
-            border-right: 1px solid var(--border-color);
-            padding: 20px;
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            box-sizing: border-box;
         }
 
         .sidebar h2 {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--accent-color);
-            margin-bottom: 30px;
-            letter-spacing: 1px;
+            margin-bottom: 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .sidebar a {
             display: block;
-            color: #888;
+            color: var(--text-dim);
             text-decoration: none;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            transition: 0.3s;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
         }
 
         .sidebar a:hover {
-            color: var(--text-color);
-            padding-left: 5px;
+            color: var(--accent-color);
+            transform: translateX(5px);
         }
 
         /* Main Content */
         .content {
-            margin-left: 290px;
-            padding: 40px;
-            max-width: 900px;
+            margin-left: 280px;
+            padding: 60px 80px;
+            width: 100%;
+            max-width: 1000px;
         }
 
-        h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        h3 { color: var(--accent-color); margin-top: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        h1 { font-size: 3rem; margin-bottom: 20px; font-weight: 900; }
+        .subtitle { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 50px; }
 
-        p { line-height: 1.6; color: #aaa; }
+        h3 { 
+            color: var(--text-main); 
+            margin-top: 60px; 
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
 
-        /* Code Blocks */
+        /* Widget Box */
+        .widget-box {
+            background: var(--sidebar-color);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .widget-header h4 { margin: 0; font-size: 1.3rem; color: var(--accent-color); }
+        .params { font-family: monospace; font-size: 0.85rem; color: #ffcc00; }
+
+        /* Code Block Style */
         pre {
             background-color: var(--code-bg);
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             overflow-x: auto;
-            position: relative;
+            margin: 15px 0;
         }
 
-        code {
-            font-family: 'Consolas', monospace;
-            color: #dcdcdc;
-            font-size: 0.9rem;
-        }
-
-        .keyword { color: #569cd6; }
-        .string { color: #ce9178; }
-        .comment { color: #6a9955; }
+        code { font-family: 'Fira Code', 'Consolas', monospace; color: #e0e0e0; font-size: 0.9rem; }
         .function { color: #dcdcaa; }
+        .string { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
 
-        /* Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .copy-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            float: right;
+            transition: opacity 0.2s;
         }
 
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th { color: var(--accent-color); font-size: 0.9rem; text-transform: uppercase; }
-        td { font-size: 0.9rem; }
-
+        .copy-btn:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
+    <nav class="sidebar">
         <h2>GHOST LIB</h2>
-        <a href="#booting">Booting Library</a>
-        <a href="#window">Creating Window</a>
-        <a href="#tabs">Managing Tabs</a>
-        <a href="#elements">UI Elements</a>
-        <a href="#notifications">Notifications</a>
-    </div>
+        <a href="#intro">Introduction</a>
+        <a href="#booting">Getting Started</a>
+        <a href="#window">Window & Tabs</a>
+        <a href="#widgets">Widget Gallery</a>
+        <a href="#examples">Pro Examples</a>
+    </nav>
 
-    <div class="content">
-        <h1>Documentation</h1>
-        <p>Ghost Lib UI is a professional-grade interface library for Roblox, focusing on speed, stability, and minimalist design.</p>
+    <main class="content">
+        <section id="intro">
+            <h1>Documentation</h1>
+            <p class="subtitle">A minimalist and professional UI library for modern Luau scripts.</p>
+        </section>
 
-        <h3 id="booting">Booting the Library</h3>
-        <p>Use the following loadstring to fetch the latest version of the library from the official repository.</p>
-        <pre><code><span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">HttpGet</span>(<span class="string">"https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua"</span>))()</code></pre>
+        <section id="booting">
+            <h3>Getting Started</h3>
+            <p>Paste this loadstring into your executor to initialize Ghost Lib UI.</p>
+            <pre><code><span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">HttpGet</span>(<span class="string">"https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua"</span>))()</code></pre>
+        </section>
 
-        <h3 id="window">Creating a Window</h3>
-        <p>The main container for your UI elements. It handles the Draggable state and the Open/Close logic.</p>
-        <pre><code><span class="keyword">local</span> Window = Library:<span class="function">CreateWindow</span>(<span class="string">"Ghost Hub"</span>)</code></pre>
+        <section id="window">
+            <h3>Window & Tabs</h3>
+            <p>The core containers for your interface features.</p>
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4>CreateWindow</h4>
+                    <span class="params">string Name</span>
+                </div>
+                <pre><code><span class="keyword">local</span> Window = Library:<span class="function">CreateWindow</span>(<span class="string">"Ghost Hub"</span>)</code></pre>
+            </div>
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4>CreateTab</h4>
+                    <span class="params">string Name</span>
+                </div>
+                <pre><code><span class="keyword">local</span> Tab1 = Window:<span class="function">CreateTab</span>(<span class="string">"Combat"</span>)
+Tab1.<span class="function">Show</span>() <span class="comment">-- Essential to display at start</span></code></pre>
+            </div>
+        </section>
 
-        <h3 id="tabs">Creating Tabs</h3>
-        <p>Tabs are used to organize your features. You must call <code>.Show()</code> to display a tab by default.</p>
-        <pre><code><span class="keyword">local</span> MainTab = Window:<span class="function">CreateTab</span>(<span class="string">"Main"</span>)
-MainTab.<span class="function">Show</span>()</code></pre>
+        <section id="widgets">
+            <h3>Widget Gallery</h3>
 
-        <h3 id="elements">UI Elements (Widgets)</h3>
-        <table>
-            <tr>
-                <th>Element</th>
-                <th>Code Snippet</th>
-            </tr>
-            <tr>
-                <td><b>Button</b></td>
-                <td><code>MainTab:CreateButton("Click Me", function() ... end)</code></td>
-            </tr>
-            <tr>
-                <td><b>Toggle</b></td>
-                <td><code>MainTab:CreateToggle("Enable", function(state) ... end)</code></td>
-            </tr>
-            <tr>
-                <td><b>Slider</b></td>
-                <td><code>MainTab:CreateSlider("Value", min, max, default, function(v) ... end)</code></td>
-            </tr>
-            <tr>
-                <td><b>Paragraph</b></td>
-                <td><code>MainTab:CreateParagraph("Title", "Your content here")</code></td>
-            </tr>
-        </table>
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4>Toggle</h4>
+                    <span class="params">string Title, function Callback</span>
+                </div>
+                <p>Returns a boolean (true/false) whenever the state changes.</p>
+                <pre><code>Tab1:<span class="function">CreateToggle</span>(<span class="string">"Auto Farm"</span>, <span class="keyword">function</span>(state)
+    <span class="function">print</span>(<span class="string">"Status: "</span>, state)
+<span class="keyword">end</span>)</code></pre>
+            </div>
 
-        <h3 id="notifications">Notifications</h3>
-        <p>Send a ghost-themed notification to the user. It will appear at the bottom-right of the screen.</p>
-        <pre><code>Library:<span class="function">Notification</span>(<span class="string">"Alert"</span>, <span class="string">"Feature activated!"</span>, <span class="keyword">5</span>)</code></pre>
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4>Slider</h4>
+                    <span class="params">string Title, int Min, int Max, int Default, function Callback</span>
+                </div>
+                <p>Provides a precise numeric value.</p>
+                <pre><code>Tab1:<span class="function">CreateSlider</span>(<span class="string">"WalkSpeed"</span>, <span class="number">16</span>, <span class="number">200</span>, <span class="number">16</span>, <span class="keyword">function</span>(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+<span class="keyword">end</span>)</code></pre>
+            </div>
 
-        <h3 id="example">Full Example</h3>
-        <pre><code><span class="comment">-- Initialize</span>
-<span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">HttpGet</span>(<span class="string">"https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua"</span>))()
-<span class="keyword">local</span> Window = Library:<span class="function">CreateWindow</span>(<span class="string">"Ghost"</span>)
-<span class="keyword">local</span> Tab = Window:<span class="function">CreateTab</span>(<span class="string">"Combat"</span>)
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4>Button</h4>
+                    <span class="params">string Title, function Callback</span>
+                </div>
+                <pre><code>Tab1:<span class="function">CreateButton</span>(<span class="string">"Reset Character"</span>, <span class="keyword">function</span>()
+    game.Players.LocalPlayer.Character.Humanoid.Health = <span class="number">0</span>
+<span class="keyword">end</span>)</code></pre>
+            </div>
+        </section>
 
-<span class="comment">-- Add Widget</span>
-Tab:<span class="function">CreateToggle</span>(<span class="string">"Aimbot"</span>, <span class="keyword">function</span>(bool)
-    <span class="function">print</span>(<span class="string">"Aimbot is now "</span>, bool)
+        <section id="examples">
+            <h3>Pro Examples</h3>
+            <p>Copy this ready-to-use template for your next project.</p>
+            
+            <div class="widget-box">
+                <h4>Full Movement Script (Template)</h4>
+                <pre><code><span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">HttpGet</span>(<span class="string">"..."</span>))()
+<span class="keyword">local</span> Win = Library:<span class="function">CreateWindow</span>(<span class="string">"Ghost Exploits"</span>)
+<span class="keyword">local</span> Mov = Win:<span class="function">CreateTab</span>(<span class="string">"Movement"</span>)
+
+<span class="comment">-- WalkSpeed Control</span>
+Mov:<span class="function">CreateSlider</span>(<span class="string">"Speed"</span>, <span class="number">16</span>, <span class="number">300</span>, <span class="number">16</span>, <span class="keyword">function</span>(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
 <span class="keyword">end</span>)
 
-Tab.<span class="function">Show</span>()</code></pre>
-    </div>
+<span class="comment">-- Infinite Jump</span>
+<span class="keyword">local</span> InfJump = <span class="keyword">false</span>
+Mov:<span class="function">CreateToggle</span>(<span class="string">"Infinite Jump"</span>, <span class="keyword">function</span>(s) InfJump = s <span class="keyword">end</span>)
+game:GetService(<span class="string">"UserInputService"</span>).JumpRequest:Connect(<span class="keyword">function</span>()
+    <span class="keyword">if</span> InfJump <span class="keyword">then</span>
+        game.Players.LocalPlayer.Character:FindFirstChildOfClass(<span class="string">'Humanoid'</span>):ChangeState(<span class="string">"Jumping"</span>)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>)
+
+Mov.<span class="function">Show</span>()</code></pre>
+            </div>
+        </section>
+    </main>
 
 </body>
 </html>
-
-
-
