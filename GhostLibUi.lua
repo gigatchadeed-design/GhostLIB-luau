@@ -1,10 +1,8 @@
---Ghost LibUI v1.0.0.
+--Ghost LibUI v2.0.0 (Enhanced with Icons)
 --made by "Clmstb" GgTchadeed.
---the code is open source, if you modify it, it would be nice to mansion "Ghost Lib UI" on your github repository and also to mansion it in your script, Happy Scripting, Thank for using!
 
-print("GhostLib UI v1.0.0 loaded successfully! ✅")
 
---check documention for more detail.
+print("GhostLib UI v2.0.0 loaded successfully! 👻✅")
 
 local Library = {}
 local TweenService = game:GetService("TweenService")
@@ -15,9 +13,20 @@ local UserInputService = game:GetService("UserInputService")
 GuiService.AutoSelectGuiEnabled = false
 GuiService.SelectedObject = nil
 
+-- Utilitaire pour créer une icône proprement
+local function CreateIcon(parent, iconId)
+    if not iconId or iconId == "" then return nil end
+    local Icon = Instance.new("ImageLabel")
+    Icon.Name = "Icon"
+    Icon.Parent = parent
+    Icon.BackgroundTransparency = 1
+    Icon.Size = UDim2.new(0, 18, 0, 18)
+    Icon.Image = "rbxassetid://" .. iconId:gsub("rbxassetid://", "")
+    Icon.ImageColor3 = Color3.fromRGB(255, 255, 255)
+    return Icon
+end
 
 -- Notif Sys
-
 local NotificationGui = Instance.new("ScreenGui")
 NotificationGui.Name = "GhostNotifications"
 NotificationGui.Parent = game:GetService("CoreGui") or game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -62,7 +71,7 @@ function Library:Notification(title, content, duration)
     end)
 end
 
-function Library:CreateWindow(hubName)
+function Library:CreateWindow(hubName, iconId)
     local hubName = hubName or "Ghost UI"
     
     local ScreenGui = Instance.new("ScreenGui")
@@ -118,7 +127,7 @@ function Library:CreateWindow(hubName)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then dragging = false end
         end)
     end
-    MakeDraggable(OpenBtn) -- drag sys
+    MakeDraggable(OpenBtn)
     MakeDraggable(MainFrame)
 
     local function ToggleUI(state)
@@ -147,7 +156,14 @@ function Library:CreateWindow(hubName)
     TopCorner.CornerRadius = UDim.new(0, 9); TopCorner.Parent = Topbar
     local topFix = Instance.new("Frame", Topbar); topFix.Size = UDim2.new(1, 0, 0, 10); topFix.Position = UDim2.new(0, 0, 1, -10); topFix.BackgroundColor3 = Color3.fromRGB(34, 34, 34); topFix.BorderSizePixel = 0
 
-    WindowsName.Parent = Topbar; WindowsName.BackgroundTransparency = 1; WindowsName.Position = UDim2.new(0.035, 0, 0, 0); WindowsName.Size = UDim2.new(0, 145, 1, 0); WindowsName.Font = Enum.Font.GothamMedium; WindowsName.Text = hubName; WindowsName.TextColor3 = Color3.fromRGB(255, 255, 255); WindowsName.TextSize = 16; WindowsName.TextXAlignment = Enum.TextXAlignment.Left
+    -- Container pour Titre + Icone
+    local TitleContainer = Instance.new("Frame", Topbar)
+    TitleContainer.Size = UDim2.new(0, 200, 1, 0); TitleContainer.Position = UDim2.new(0.035, 0, 0, 0); TitleContainer.BackgroundTransparency = 1
+    local TitleList = Instance.new("UIListLayout", TitleContainer); TitleList.FillDirection = Enum.FillDirection.Horizontal; TitleList.VerticalAlignment = Enum.VerticalAlignment.Center; TitleList.Padding = UDim.new(0, 8)
+
+    CreateIcon(TitleContainer, iconId)
+
+    WindowsName.Parent = TitleContainer; WindowsName.BackgroundTransparency = 1; WindowsName.Size = UDim2.new(0, 145, 1, 0); WindowsName.Font = Enum.Font.GothamMedium; WindowsName.Text = hubName; WindowsName.TextColor3 = Color3.fromRGB(255, 255, 255); WindowsName.TextSize = 16; WindowsName.TextXAlignment = Enum.TextXAlignment.Left
 
     CloseBtn.Parent = Topbar; CloseBtn.BackgroundTransparency = 1; CloseBtn.Position = UDim2.new(0.94, 0, 0.2, 0); CloseBtn.Size = UDim2.new(0, 23, 0, 23); CloseBtn.Image = "rbxassetid://10137832201"; CloseBtn.ImageColor3 = Color3.fromRGB(138, 138, 138)
     CloseBtn.MouseButton1Click:Connect(function() ToggleUI("close") end)
@@ -164,12 +180,18 @@ function Library:CreateWindow(hubName)
     local PageHolder = Instance.new("Frame", MainFrame); PageHolder.BackgroundTransparency = 1; PageHolder.Position = UDim2.new(0.285, 0, 0.13, 0); PageHolder.Size = UDim2.new(0.68, 0, 0.84, 0)
 
     local Window = {}
-    function Window:CreateTab(name)
+    function Window:CreateTab(name, iconId)
         local TabBtn = Instance.new("Frame", TabScroll); TabBtn.Size = UDim2.new(0, 133, 0, 34); TabBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         Instance.new("UICorner", TabBtn).CornerRadius = UDim.new(1, 0)
         local Stroke = Instance.new("UIStroke", TabBtn); Stroke.Color = Color3.fromRGB(84, 84, 84); Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
         local Grad = Instance.new("UIGradient", TabBtn); Grad.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(47, 47, 47)), ColorSequenceKeypoint.new(1, Color3.fromRGB(38, 38, 38))}; Grad.Rotation = 87
-        local Label = Instance.new("TextLabel", TabBtn); Label.Size = UDim2.new(1, 0, 1, 0); Label.BackgroundTransparency = 1; Label.Font = Enum.Font.Gotham; Label.Text = name; Label.TextColor3 = Color3.fromRGB(255, 255, 255); Label.TextSize = 13
+        
+        local TabContent = Instance.new("Frame", TabBtn); TabContent.Size = UDim2.new(1, 0, 1, 0); TabContent.BackgroundTransparency = 1
+        local TabL = Instance.new("UIListLayout", TabContent); TabL.FillDirection = Enum.FillDirection.Horizontal; TabL.HorizontalAlignment = Enum.HorizontalAlignment.Center; TabL.VerticalAlignment = Enum.VerticalAlignment.Center; TabL.Padding = UDim.new(0, 6)
+
+        CreateIcon(TabContent, iconId)
+
+        local Label = Instance.new("TextLabel", TabContent); Label.Size = UDim2.new(0, 0, 1, 0); Label.AutomaticSize = Enum.AutomaticSize.X; Label.BackgroundTransparency = 1; Label.Font = Enum.Font.Gotham; Label.Text = name; Label.TextColor3 = Color3.fromRGB(255, 255, 255); Label.TextSize = 13
         local RealBtn = Instance.new("TextButton", TabBtn); RealBtn.Size = UDim2.new(1, 0, 1, 0); RealBtn.BackgroundTransparency = 1; RealBtn.Text = ""
 
         local Page = Instance.new("ScrollingFrame", PageHolder); Page.Size = UDim2.new(1, 0, 1, 0); Page.BackgroundTransparency = 1; Page.Visible = false; Page.ScrollBarThickness = 0; Page.CanvasSize = UDim2.new(0,0,0,0)
@@ -185,32 +207,50 @@ function Library:CreateWindow(hubName)
         local Tab = {}
         Tab.Show = OpenTab
 
-        function Tab:CreateParagraph(title, content)
+        function Tab:CreateParagraph(title, content, iconId)
             local PFrame = Instance.new("Frame", Page); PFrame.Size = UDim2.new(0, 390, 0, 60); PFrame.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
             Instance.new("UICorner", PFrame).CornerRadius = UDim.new(0, 6)
             Instance.new("UIStroke", PFrame).Color = Color3.fromRGB(60, 60, 60)
-            local T = Instance.new("TextLabel", PFrame); T.Position = UDim2.new(0, 10, 0, 5); T.Size = UDim2.new(1, -20, 0, 20); T.Font = Enum.Font.GothamBold; T.Text = title; T.TextColor3 = Color3.fromRGB(255, 255, 255); T.TextSize = 13; T.TextXAlignment = Enum.TextXAlignment.Left; T.BackgroundTransparency = 1
+            
+            local PTitleCont = Instance.new("Frame", PFrame); PTitleCont.Position = UDim2.new(0, 10, 0, 5); PTitleCont.Size = UDim2.new(1, -20, 0, 20); PTitleCont.BackgroundTransparency = 1
+            local PList = Instance.new("UIListLayout", PTitleCont); PList.FillDirection = Enum.FillDirection.Horizontal; PList.VerticalAlignment = Enum.VerticalAlignment.Center; PList.Padding = UDim.new(0, 6)
+
+            CreateIcon(PTitleCont, iconId)
+
+            local T = Instance.new("TextLabel", PTitleCont); T.Size = UDim2.new(1, -25, 1, 0); T.Font = Enum.Font.GothamBold; T.Text = title; T.TextColor3 = Color3.fromRGB(255, 255, 255); T.TextSize = 13; T.TextXAlignment = Enum.TextXAlignment.Left; T.BackgroundTransparency = 1
             local C = Instance.new("TextLabel", PFrame); C.Position = UDim2.new(0, 10, 0, 25); C.Size = UDim2.new(1, -20, 0, 30); C.Font = Enum.Font.Gotham; C.Text = content; C.TextColor3 = Color3.fromRGB(180, 180, 180); C.TextSize = 12; C.TextXAlignment = Enum.TextXAlignment.Left; C.TextWrapped = true; C.BackgroundTransparency = 1
             PFrame.Size = UDim2.new(0, 390, 0, C.TextBounds.Y + 35)
         end
 
-        function Tab:CreateButton(text, callback)
+        function Tab:CreateButton(text, callback, iconId)
             local BFrame = Instance.new("Frame", Page); BFrame.Size = UDim2.new(0, 390, 0, 35); BFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             Instance.new("UICorner", BFrame).CornerRadius = UDim.new(0, 6)
             local BStroke = Instance.new("UIStroke", BFrame); BStroke.Color = Color3.fromRGB(84, 84, 84); BStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
             local G = Instance.new("UIGradient", BFrame); G.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(47, 47, 47)), ColorSequenceKeypoint.new(1, Color3.fromRGB(38, 38, 38))}; G.Rotation = 87
-            local L = Instance.new("TextLabel", BFrame); L.Position = UDim2.new(0.05, 0, 0, 0); L.Size = UDim2.new(0.9, 0, 1, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 13; L.TextXAlignment = Enum.TextXAlignment.Left
+            
+            local BCont = Instance.new("Frame", BFrame); BCont.Position = UDim2.new(0.05, 0, 0, 0); BCont.Size = UDim2.new(0.9, 0, 1, 0); BCont.BackgroundTransparency = 1
+            local BList = Instance.new("UIListLayout", BCont); BList.FillDirection = Enum.FillDirection.Horizontal; BList.VerticalAlignment = Enum.VerticalAlignment.Center; BList.Padding = UDim.new(0, 8)
+
+            CreateIcon(BCont, iconId)
+
+            local L = Instance.new("TextLabel", BCont); L.Size = UDim2.new(1, -25, 1, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 13; L.TextXAlignment = Enum.TextXAlignment.Left
             local C = Instance.new("TextButton", BFrame); C.Size = UDim2.new(1, 0, 1, 0); C.BackgroundTransparency = 1; C.Text = ""
             C.MouseButton1Down:Connect(function() TweenService:Create(BFrame, TweenInfo.new(0.1), {BackgroundColor3 = Color3.fromRGB(200, 200, 200)}):Play() end)
             C.MouseButton1Up:Connect(function() TweenService:Create(BFrame, TweenInfo.new(0.1), {BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play(); callback() end)
         end
 
-        function Tab:CreateToggle(text, callback)
+        function Tab:CreateToggle(text, callback, iconId)
             local TFrame = Instance.new("Frame", Page); TFrame.Size = UDim2.new(0, 390, 0, 35); TFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             Instance.new("UICorner", TFrame).CornerRadius = UDim.new(0, 6)
             local TStroke = Instance.new("UIStroke", TFrame); TStroke.Color = Color3.fromRGB(60, 60, 60)
             local G = Instance.new("UIGradient", TFrame); G.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(47, 47, 47)), ColorSequenceKeypoint.new(1, Color3.fromRGB(38, 38, 38))}; G.Rotation = 87
-            local L = Instance.new("TextLabel", TFrame); L.Position = UDim2.new(0.05, 0, 0, 0); L.Size = UDim2.new(0.7, 0, 1, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 13; L.TextXAlignment = Enum.TextXAlignment.Left
+            
+            local TCont = Instance.new("Frame", TFrame); TCont.Position = UDim2.new(0.05, 0, 0, 0); TCont.Size = UDim2.new(0.7, 0, 1, 0); TCont.BackgroundTransparency = 1
+            local TList = Instance.new("UIListLayout", TCont); TList.FillDirection = Enum.FillDirection.Horizontal; TList.VerticalAlignment = Enum.VerticalAlignment.Center; TList.Padding = UDim.new(0, 8)
+
+            CreateIcon(TCont, iconId)
+
+            local L = Instance.new("TextLabel", TCont); L.Size = UDim2.new(1, -25, 1, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 13; L.TextXAlignment = Enum.TextXAlignment.Left
             local Switch = Instance.new("Frame", TFrame); Switch.Position = UDim2.new(0.88, 0, 0.22, 0); Switch.Size = UDim2.new(0, 32, 0, 18); Switch.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
             Instance.new("UICorner", Switch).CornerRadius = UDim.new(1, 0)
             local Circle = Instance.new("Frame", Switch); Circle.Size = UDim2.new(0, 14, 0, 14); Circle.Position = UDim2.new(0, 2, 0.5, -7); Circle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -225,10 +265,16 @@ function Library:CreateWindow(hubName)
             end)
         end
 
-        function Tab:CreateSlider(text, min, max, default, callback)
+        function Tab:CreateSlider(text, min, max, default, callback, iconId)
             local SFrame = Instance.new("Frame", Page); SFrame.Size = UDim2.new(0, 390, 0, 45); SFrame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
             Instance.new("UICorner", SFrame).CornerRadius = UDim.new(0, 6)
-            local L = Instance.new("TextLabel", SFrame); L.Position = UDim2.new(0.05, 0, 0.1, 0); L.Size = UDim2.new(0.5, 0, 0.4, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 12; L.TextXAlignment = Enum.TextXAlignment.Left
+            
+            local SCont = Instance.new("Frame", SFrame); SCont.Position = UDim2.new(0.05, 0, 0.1, 0); SCont.Size = UDim2.new(0.5, 0, 0.4, 0); SCont.BackgroundTransparency = 1
+            local SList = Instance.new("UIListLayout", SCont); SList.FillDirection = Enum.FillDirection.Horizontal; SList.VerticalAlignment = Enum.VerticalAlignment.Center; SList.Padding = UDim.new(0, 6)
+
+            CreateIcon(SCont, iconId)
+
+            local L = Instance.new("TextLabel", SCont); L.Size = UDim2.new(1, -25, 1, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 12; L.TextXAlignment = Enum.TextXAlignment.Left
             local Val = Instance.new("TextLabel", SFrame); Val.Position = UDim2.new(0.45, 0, 0.1, 0); Val.Size = UDim2.new(0.5, 0, 0.4, 0); Val.BackgroundTransparency = 1; Val.Font = Enum.Font.Gotham; Val.Text = tostring(default); Val.TextColor3 = Color3.fromRGB(255, 255, 255); Val.TextSize = 12; Val.TextXAlignment = Enum.TextXAlignment.Right
             local Bar = Instance.new("Frame", SFrame); Bar.Size = UDim2.new(0.9, 0, 0, 4); Bar.Position = UDim2.new(0.05, 0, 0.7, 0); Bar.BackgroundColor3 = Color3.fromRGB(60, 60, 60); Bar.BorderSizePixel = 0
             local Fill = Instance.new("Frame", Bar); Fill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0); Fill.BackgroundColor3 = Color3.fromRGB(255, 255, 255); Fill.BorderSizePixel = 0
@@ -249,7 +295,5 @@ function Library:CreateWindow(hubName)
     end
     return Window
 end
-
---Don't change this line! otherwise it won't work
 
 return Library
