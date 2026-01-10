@@ -1,5 +1,7 @@
 --Ghost LibUI v2.0.0 (Enhanced with Icons)
 --made by "Clmstb" GgTchadeed.
+--the code is open source, if you modify it, it would be nice to mansion "Ghost Lib UI" on your github repository and also to mansion it in your script, Happy Scripting, Thank for using!
+--check documention for more detail.
 
 
 print("GhostLib UI v2.0.0 loaded successfully! 👻✅")
@@ -297,3 +299,4 @@ function Library:CreateWindow(hubName, iconId)
 end
 
 return Library
+
