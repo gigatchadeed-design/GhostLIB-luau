@@ -101,7 +101,7 @@
         /* ICON PREVIEW */
         .icon-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 12px;
             margin: 20px 0;
         }
@@ -111,8 +111,11 @@
             padding: 12px;
             text-align: center;
             border-radius: 6px;
+            transition: 0.3s;
         }
-        .icon-box code { display: block; font-size: 0.65rem; color: #ffcc00; margin-top: 5px; }
+        .icon-box:hover { border-color: #ffcc00; background: #161616; }
+        .icon-box span { display: block; font-size: 0.75rem; font-weight: bold; margin-bottom: 4px; color: #fff; }
+        .icon-box code { display: block; font-size: 0.65rem; color: #ffcc00; }
 
         .notif-badge { background: #ff4757; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
     </style>
@@ -120,7 +123,7 @@
 <body>
 
     <nav class="sidebar">
-        <div class="logo">GHOST.LIB <span style="font-weight: 200; font-size: 0.8rem; border: 1px solid #333; padding: 2px 5px; border-radius: 4px;">V2</span></div>
+        <div class="logo">GHOST.LIB <span style="font-weight: 200; font-size: 0.8rem; border: 1px solid #333; padding: 2px 5px; border-radius: 4px;">V2.1</span></div>
         
         <div class="nav-group">
             <div class="nav-title">Essentials</div>
@@ -139,7 +142,15 @@
             <a href="#toggle">Toggles</a>
             <a href="#slider">Sliders</a>
             <a href="#button">Buttons</a>
+            <a href="#dropdown">Dropdowns</a>
+            <a href="#keybind">Keybinds</a>
+            <a href="#colorpicker">Color Pickers</a>
             <a href="#paragraph">Paragraphs</a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-title">Assets</div>
+            <a href="#icons">Icons Library</a>
         </div>
     </nav>
 
@@ -224,6 +235,45 @@ MainTab.<span class="f">Show</span>() <span class="c">-- Affiche l'onglet par d�
             </div>
         </section>
 
+        <section id="dropdown">
+            <h3>Dropdowns <span class="notif-badge">NEW</span></h3>
+            <div class="widget-card">
+                <div class="widget-header">
+                    <span class="widget-name">CreateDropdown</span>
+                    <span class="widget-params">(name, list, callback)</span>
+                </div>
+                <pre><code>MainTab:<span class="f">CreateDropdown</span>(<span class="s">"Teleport To"</span>, {<span class="s">"Shop"</span>, <span class="s">"Forest"</span>, <span class="s">"Dungeon"</span>}, <span class="k">function</span>(selected)
+    <span class="f">print</span>(<span class="s">"Selected: "</span>, selected)
+<span class="k">end</span>)</code></pre>
+            </div>
+        </section>
+
+        <section id="keybind">
+            <h3>Keybinds <span class="notif-badge">NEW</span></h3>
+            <div class="widget-card">
+                <div class="widget-header">
+                    <span class="widget-name">CreateKeybind</span>
+                    <span class="widget-params">(name, default, callback)</span>
+                </div>
+                <pre><code>MainTab:<span class="f">CreateKeybind</span>(<span class="s">"Fly Key"</span>, Enum.KeyCode.F, <span class="k">function</span>()
+    <span class="f">print</span>(<span class="s">"Key Pressed!"</span>)
+<span class="k">end</span>)</code></pre>
+            </div>
+        </section>
+
+        <section id="colorpicker">
+            <h3>Color Pickers <span class="notif-badge">NEW</span></h3>
+            <div class="widget-card">
+                <div class="widget-header">
+                    <span class="widget-name">CreateColorPicker</span>
+                    <span class="widget-params">(name, default, callback)</span>
+                </div>
+                <pre><code>MainTab:<span class="f">CreateColorPicker</span>(<span class="s">"UI Theme"</span>, Color3.fromRGB(<span class="n">255</span>, <span class="n">0</span>, <span class="n">0</span>), <span class="k">function</span>(color)
+    <span class="f">print</span>(<span class="s">"Color changed to: "</span>, color)
+<span class="k">end</span>)</code></pre>
+            </div>
+        </section>
+
         <section id="paragraph">
             <h3>Paragraphs</h3>
             <div class="widget-card">
@@ -235,19 +285,36 @@ MainTab.<span class="f">Show</span>() <span class="c">-- Affiche l'onglet par d�
             </div>
         </section>
 
-        <section>
-            <h3>Quick Icons Reference</h3>
-            <p>Utilisez ces IDs directement dans vos widgets :</p>
+        <section id="icons">
+            <h3>Full Icons Library Reference</h3>
+            <p>Utilisez ces IDs dans vos widgets pour personnaliser votre interface.</p>
             <div class="icon-grid">
-                <div class="icon-box">🛡️<code>7734056608</code></div>
-                <div class="icon-box">⚙️<code>7734053495</code></div>
-                <div class="icon-box">🏠<code>7733960981</code></div>
-                <div class="icon-box">👑<code>7733765398</code></div>
-                <div class="icon-box">💀<code>7734058599</code></div>
-                <div class="icon-box">💰<code>7743866529</code></div>
-                <div class="icon-box">🚀<code>7743874262</code></div>
-                <div class="icon-box">🔒<code>7733992528</code></div>
+                <div class="icon-box"><span>Ghost</span><code>7743868000</code></div>
+                <div class="icon-box"><span>Skull</span><code>7734058599</code></div>
+                <div class="icon-box"><span>Home</span><code>7733960981</code></div>
+                <div class="icon-box"><span>Settings</span><code>7734053495</code></div>
+                <div class="icon-box"><span>Gamepad</span><code>7733799901</code></div>
+                <div class="icon-box"><span>Sword (Axe)</span><code>7733674079</code></div>
+                <div class="icon-box"><span>Flame</span><code>7733798747</code></div>
+                <div class="icon-box"><span>User</span><code>7743875962</code></div>
+                <div class="icon-box"><span>Crown</span><code>7733765398</code></div>
+                <div class="icon-box"><span>Coins</span><code>7743866529</code></div>
+                <div class="icon-box"><span>Alert</span><code>7733658504</code></div>
+                <div class="icon-box"><span>Terminal</span><code>7743872929</code></div>
+                <div class="icon-box"><span>Zap</span><code>7733771628</code></div>
+                <div class="icon-box"><span>Shield</span><code>7734056608</code></div>
+                <div class="icon-box"><span>Lock</span><code>7733992528</code></div>
+                <div class="icon-box"><span>Target</span><code>7743872758</code></div>
+                <div class="icon-box"><span>Bug</span><code>7733701545</code></div>
+                <div class="icon-box"><span>Refresh</span><code>7734051052</code></div>
+                <div class="icon-box"><span>Star</span><code>7734068321</code></div>
+                <div class="icon-box"><span>Gift</span><code>7733946818</code></div>
+                <div class="icon-box"><span>Coffee</span><code>7733752630</code></div>
+                <div class="icon-box"><span>Database</span><code>7743866778</code></div>
+                <div class="icon-box"><span>Download</span><code>7733770755</code></div>
+                <div class="icon-box"><span>Eye</span><code>7733774602</code></div>
             </div>
+            <p style="color: var(--text-dim); font-size: 0.8rem;">+ 200 autres icônes disponibles dans le dictionnaire...</p>
         </section>
     </main>
 
