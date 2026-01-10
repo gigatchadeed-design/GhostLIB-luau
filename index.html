@@ -162,7 +162,7 @@ MainTab.<span class="function">Show</span>()</code></pre>
 
         <h3 id="example">Full Example</h3>
         <pre><code><span class="comment">-- Initialize</span>
-<span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">(game:HttpGet("https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua"))()</span>(<span class="string">" "</span>))()
+<span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">HttpGet</span>(<span class="string">"https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua"</span>))()
 <span class="keyword">local</span> Window = Library:<span class="function">CreateWindow</span>(<span class="string">"Ghost"</span>)
 <span class="keyword">local</span> Tab = Window:<span class="function">CreateTab</span>(<span class="string">"Combat"</span>)
 
@@ -176,5 +176,6 @@ Tab.<span class="function">Show</span>()</code></pre>
 
 </body>
 </html>
+
 
 
