@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Lib UI - Documentation</title>
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --sidebar-color: #161616;
+            --accent-color: #cccccc;
+            --text-color: #e0e0e0;
+            --code-bg: #1e1e1e;
+            --border-color: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-color);
+            height: 100vh;
+            position: fixed;
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #888;
+            text-decoration: none;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: var(--text-color);
+            padding-left: 5px;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 290px;
+            padding: 40px;
+            max-width: 900px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        h3 { color: var(--accent-color); margin-top: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+
+        p { line-height: 1.6; color: #aaa; }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            position: relative;
+        }
+
+        code {
+            font-family: 'Consolas', monospace;
+            color: #dcdcdc;
+            font-size: 0.9rem;
+        }
+
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .comment { color: #6a9955; }
+        .function { color: #dcdcaa; }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th { color: var(--accent-color); font-size: 0.9rem; text-transform: uppercase; }
+        td { font-size: 0.9rem; }
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>GHOST LIB</h2>
+        <a href="#booting">Booting Library</a>
+        <a href="#window">Creating Window</a>
+        <a href="#tabs">Managing Tabs</a>
+        <a href="#elements">UI Elements</a>
+        <a href="#notifications">Notifications</a>
+    </div>
+
+    <div class="content">
+        <h1>Documentation</h1>
+        <p>Ghost Lib UI is a professional-grade interface library for Roblox, focusing on speed, stability, and minimalist design.</p>
+
+        <h3 id="booting">Booting the Library</h3>
+        <p>Use the following loadstring to fetch the latest version of the library from the official repository.</p>
+        <pre><code><span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">HttpGet</span>(<span class="string">"https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua"</span>))()</code></pre>
+
+        <h3 id="window">Creating a Window</h3>
+        <p>The main container for your UI elements. It handles the Draggable state and the Open/Close logic.</p>
+        <pre><code><span class="keyword">local</span> Window = Library:<span class="function">CreateWindow</span>(<span class="string">"Ghost Hub"</span>)</code></pre>
+
+        <h3 id="tabs">Creating Tabs</h3>
+        <p>Tabs are used to organize your features. You must call <code>.Show()</code> to display a tab by default.</p>
+        <pre><code><span class="keyword">local</span> MainTab = Window:<span class="function">CreateTab</span>(<span class="string">"Main"</span>)
+MainTab.<span class="function">Show</span>()</code></pre>
+
+        <h3 id="elements">UI Elements (Widgets)</h3>
+        <table>
+            <tr>
+                <th>Element</th>
+                <th>Code Snippet</th>
+            </tr>
+            <tr>
+                <td><b>Button</b></td>
+                <td><code>MainTab:CreateButton("Click Me", function() ... end)</code></td>
+            </tr>
+            <tr>
+                <td><b>Toggle</b></td>
+                <td><code>MainTab:CreateToggle("Enable", function(state) ... end)</code></td>
+            </tr>
+            <tr>
+                <td><b>Slider</b></td>
+                <td><code>MainTab:CreateSlider("Value", min, max, default, function(v) ... end)</code></td>
+            </tr>
+            <tr>
+                <td><b>Paragraph</b></td>
+                <td><code>MainTab:CreateParagraph("Title", "Your content here")</code></td>
+            </tr>
+        </table>
+
+        <h3 id="notifications">Notifications</h3>
+        <p>Send a ghost-themed notification to the user. It will appear at the bottom-right of the screen.</p>
+        <pre><code>Library:<span class="function">Notification</span>(<span class="string">"Alert"</span>, <span class="string">"Feature activated!"</span>, <span class="keyword">5</span>)</code></pre>
+
+        <h3 id="example">Full Example</h3>
+        <pre><code><span class="comment">-- Initialize</span>
+<span class="keyword">local</span> Library = <span class="function">loadstring</span>(game:<span class="function">HttpGet</span>(<span class="string">"..."</span>))()
+<span class="keyword">local</span> Window = Library:<span class="function">CreateWindow</span>(<span class="string">"Ghost"</span>)
+<span class="keyword">local</span> Tab = Window:<span class="function">CreateTab</span>(<span class="string">"Combat"</span>)
+
+<span class="comment">-- Add Widget</span>
+Tab:<span class="function">CreateToggle</span>(<span class="string">"Aimbot"</span>, <span class="keyword">function</span>(bool)
+    <span class="function">print</span>(<span class="string">"Aimbot is now "</span>, bool)
+<span class="keyword">end</span>)
+
+Tab.<span class="function">Show</span>()</code></pre>
+    </div>
+
+</body>
+</html>
