@@ -29,47 +29,70 @@ local function CreateIcon(parent, iconId)
 end
 
 -- Notif Sys
-local NotificationGui = Instance.new("ScreenGui")
-NotificationGui.Name = "GhostNotifications"
-NotificationGui.Parent = game:GetService("CoreGui") or game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-local NotifHolder = Instance.new("Frame", NotificationGui)
-NotifHolder.Size = UDim2.new(0, 250, 1, 0)
-NotifHolder.Position = UDim2.new(1, -260, 0, 10)
-NotifHolder.BackgroundTransparency = 1
+function Library:Notify(data)
+    local title = data.Title or "Notification"
+    local content = data.Content or ""
+    local duration = data.Duration or 5
+    local iconID = data.Icon
 
-local NotifList = Instance.new("UIListLayout", NotifHolder)
-NotifList.VerticalAlignment = Enum.VerticalAlignment.Bottom
-NotifList.Padding = UDim.new(0, 10)
+    local ScreenGui = game:GetService("CoreGui"):FindFirstChild("GhostNotifications") or Instance.new("ScreenGui", game:GetService("CoreGui"))
+    ScreenGui.Name = "GhostNotifications"
 
-function Library:Notification(title, content, duration)
-    local duration = duration or 5
-    local NotifFrame = Instance.new("Frame", NotifHolder)
-    NotifFrame.Size = UDim2.new(1, 0, 0, 0)
-    NotifFrame.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
-    NotifFrame.ClipsDescendants = true
-    
-    local NCorner = Instance.new("UICorner", NotifFrame)
-    NCorner.CornerRadius = UDim.new(0, 8)
-    local NStroke = Instance.new("UIStroke", NotifFrame)
-    NStroke.Color = Color3.fromRGB(60, 60, 60)
+    local NotifFrame = Instance.new("Frame")
+    NotifFrame.Size = UDim2.new(0, 250, 0, 80)
+    NotifFrame.Position = UDim2.new(1, 10, 0.8, 0) -- Commence hors écran
+    NotifFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    NotifFrame.BorderSizePixel = 0
+    NotifFrame.Parent = ScreenGui
 
-    local Title = Instance.new("TextLabel", NotifFrame)
-    Title.Text = title; Title.Size = UDim2.new(1, -20, 0, 25); Title.Position = UDim2.new(0, 10, 0, 5)
-    Title.Font = Enum.Font.GothamBold; Title.TextColor3 = Color3.fromRGB(255, 255, 255); Title.TextSize = 13; Title.TextXAlignment = Enum.TextXAlignment.Left; Title.BackgroundTransparency = 1
+    -- Coins arrondis
+    local UICorner = Instance.new("UICorner", NotifFrame)
+    UICorner.CornerRadius = UDim.new(0, 8)
 
-    local Text = Instance.new("TextLabel", NotifFrame)
-    Text.Text = content; Text.Size = UDim2.new(1, -20, 0, 20); Text.Position = UDim2.new(0, 10, 0, 25)
-    Text.Font = Enum.Font.Gotham; Text.TextColor3 = Color3.fromRGB(180, 180, 180); Text.TextSize = 12; Text.TextXAlignment = Enum.TextXAlignment.Left; Text.BackgroundTransparency = 1; Text.TextWrapped = true
+    -- Bordure stylée
+    local UIGradient = Instance.new("UIStroke", NotifFrame)
+    UIGradient.Color = Color3.fromRGB(40, 40, 40)
+    UIGradient.Thickness = 1
 
-    TweenService:Create(NotifFrame, TweenInfo.new(0.4), {Size = UDim2.new(1, 0, 0, 60)}):Play()
+    -- LOGIQUE ICÔNE : On ne crée l'image que si l'ID existe
+    if iconID and iconID ~= "" then
+        local Icon = Instance.new("ImageLabel")
+        Icon.Name = "Icon"
+        Icon.Parent = NotifFrame
+        Icon.BackgroundTransparency = 1
+        Icon.Position = UDim2.new(0, 10, 0.5, -12)
+        Icon.Size = UDim2.new(0, 24, 0, 24)
+        Icon.Image = iconID
+    end
 
+    local TitleLabel = Instance.new("TextLabel", NotifFrame)
+    TitleLabel.Text = title
+    TitleLabel.Size = UDim2.new(1, -50, 0, 20)
+    TitleLabel.Position = iconID and UDim2.new(0, 45, 0, 10) or UDim2.new(0, 15, 0, 10)
+    TitleLabel.BackgroundTransparency = 1
+    TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    TitleLabel.Font = Enum.Font.GothamBold
+
+    local ContentLabel = Instance.new("TextLabel", NotifFrame)
+    ContentLabel.Text = content
+    ContentLabel.Size = UDim2.new(1, -50, 0, 40)
+    ContentLabel.Position = iconID and UDim2.new(0, 45, 0, 30) or UDim2.new(0, 15, 0, 30)
+    ContentLabel.BackgroundTransparency = 1
+    ContentLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+    ContentLabel.TextXAlignment = Enum.TextXAlignment.Left
+    ContentLabel.TextWrapped = true
+    ContentLabel.Font = Enum.Font.Gotham
+
+    -- Animation d'entrée
+    NotifFrame:TweenPosition(UDim2.new(1, -260, 0.8, 0), "Out", "Quart", 0.5, true)
+
+    -- Suppression auto
     task.delay(duration, function()
-        if NotifFrame then
-            TweenService:Create(NotifFrame, TweenInfo.new(0.4), {Size = UDim2.new(1, 0, 0, 0)}):Play()
-            task.wait(0.4)
-            NotifFrame:Destroy()
-        end
+        NotifFrame:TweenPosition(UDim2.new(1, 10, 0.8, 0), "In", "Quart", 0.5, true)
+        task.wait(0.5)
+        NotifFrame:Destroy()
     end)
 end
 
@@ -299,4 +322,3 @@ function Library:CreateWindow(hubName, iconId)
 end
 
 return Library
-
