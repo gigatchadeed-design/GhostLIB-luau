@@ -4,7 +4,7 @@
 --check documention for more detail.
 
 
-print("GhostLib UI v2.0.0 loaded successfully! 👻✅")
+print("GhostLib UI v2.1.0 loaded successfully! 👻✅")
 
 local Library = {}
 local TweenService = game:GetService("TweenService")
@@ -27,7 +27,6 @@ local function CreateIcon(parent, iconId)
     Icon.ImageColor3 = Color3.fromRGB(255, 255, 255)
     return Icon
 end
---this is f*ucking bug
 
 -- Notif Sys
 
@@ -317,10 +316,65 @@ function Library:CreateWindow(hubName, iconId)
             UserInputService.InputChanged:Connect(function(input) if sliding and input.UserInputType == Enum.UserInputType.MouseMovement then move(input) end end)
         end
 
+        -- AJOUTS V3 SANS CHANGER LE DESIGN V2 --
+        
+        function Tab:CreateDropdown(text, options, callback)
+            local DFrame = Instance.new("Frame", Page); DFrame.Size = UDim2.new(0, 390, 0, 35); DFrame.BackgroundColor3 = Color3.fromRGB(34, 34, 34); DFrame.ClipsDescendants = true; Instance.new("UICorner", DFrame).CornerRadius = UDim.new(0, 6)
+            local L = Instance.new("TextLabel", DFrame); L.Position = UDim2.new(0, 15, 0, 0); L.Size = UDim2.new(1, -30, 0, 35); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text .. " : ..."; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 12; L.TextXAlignment = Enum.TextXAlignment.Left
+            local Btn = Instance.new("TextButton", DFrame); Btn.Size = UDim2.new(1, 0, 0, 35); Btn.BackgroundTransparency = 1; Btn.Text = ""
+            local Container = Instance.new("Frame", DFrame); Container.Position = UDim2.new(0, 0, 0, 35); Container.Size = UDim2.new(1, 0, 0, 0); Container.BackgroundTransparency = 1
+            local UIList = Instance.new("UIListLayout", Container); UIList.HorizontalAlignment = Enum.HorizontalAlignment.Center; UIList.Padding = UDim.new(0, 5)
+            
+            local opened = false
+            Btn.MouseButton1Click:Connect(function()
+                opened = not opened
+                TweenService:Create(DFrame, TweenInfo.new(0.3), {Size = opened and UDim2.new(0, 390, 0, 35 + UIList.AbsoluteContentSize.Y + 10) or UDim2.new(0, 390, 0, 35)}):Play()
+            end)
+            
+            for _, v in pairs(options) do
+                local Opt = Instance.new("TextButton", Container); Opt.Size = UDim2.new(0, 370, 0, 25); Opt.BackgroundColor3 = Color3.fromRGB(45, 45, 45); Opt.Font = Enum.Font.Gotham; Opt.Text = v; Opt.TextColor3 = Color3.fromRGB(200, 200, 200); Opt.TextSize = 12; Instance.new("UICorner", Opt)
+                Opt.MouseButton1Click:Connect(function() L.Text = text .. " : " .. v; opened = false; DFrame.Size = UDim2.new(0, 390, 0, 35); callback(v) end)
+            end
+        end
+
+        function Tab:CreateKeybind(text, default, callback)
+            local KFrame = Instance.new("Frame", Page); KFrame.Size = UDim2.new(0, 390, 0, 35); KFrame.BackgroundColor3 = Color3.fromRGB(34, 34, 34); Instance.new("UICorner", KFrame).CornerRadius = UDim.new(0, 6)
+            local L = Instance.new("TextLabel", KFrame); L.Position = UDim2.new(0, 15, 0, 0); L.Size = UDim2.new(1, -30, 1, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 12; L.TextXAlignment = Enum.TextXAlignment.Left
+            local BindBox = Instance.new("TextButton", KFrame); BindBox.Position = UDim2.new(1, -75, 0.2, 0); BindBox.Size = UDim2.new(0, 65, 0, 20); BindBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50); BindBox.Font = Enum.Font.GothamBold; BindBox.Text = default.Name; BindBox.TextColor3 = Color3.fromRGB(255, 255, 255); BindBox.TextSize = 11; Instance.new("UICorner", BindBox)
+            
+            local currentKey = default
+            BindBox.MouseButton1Click:Connect(function()
+                BindBox.Text = "..."
+                local input = UserInputService.InputBegan:Wait()
+                if input.UserInputType == Enum.UserInputType.Keyboard then
+                    currentKey = input.KeyCode
+                    BindBox.Text = currentKey.Name
+                end
+            end)
+            
+            UserInputService.InputBegan:Connect(function(input, gpe)
+                if not gpe and input.KeyCode == currentKey then callback() end
+            end)
+        end
+
+        function Tab:CreateColorPicker(text, default, callback)
+            local CPFrame = Instance.new("Frame", Page); CPFrame.Size = UDim2.new(0, 390, 0, 35); CPFrame.BackgroundColor3 = Color3.fromRGB(34, 34, 34); Instance.new("UICorner", CPFrame).CornerRadius = UDim.new(0, 6)
+            local L = Instance.new("TextLabel", CPFrame); L.Position = UDim2.new(0, 15, 0, 0); L.Size = UDim2.new(1, -30, 1, 0); L.BackgroundTransparency = 1; L.Font = Enum.Font.Gotham; L.Text = text; L.TextColor3 = Color3.fromRGB(255, 255, 255); L.TextSize = 12; L.TextXAlignment = Enum.TextXAlignment.Left
+            local ColorDisplay = Instance.new("TextButton", CPFrame); ColorDisplay.Position = UDim2.new(1, -45, 0.2, 0); ColorDisplay.Size = UDim2.new(0, 35, 0, 20); ColorDisplay.BackgroundColor3 = default; ColorDisplay.Text = ""; Instance.new("UICorner", ColorDisplay)
+            
+            ColorDisplay.MouseButton1Click:Connect(function()
+                -- Color picker simple pour la v2
+                local newColor = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+                ColorDisplay.BackgroundColor3 = newColor
+                callback(newColor)
+            end)
+        end
+
         return Tab
     end
     return Window
 end
 
 return Library
+
 
