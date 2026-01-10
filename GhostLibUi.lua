@@ -27,6 +27,7 @@ local function CreateIcon(parent, iconId)
     Icon.ImageColor3 = Color3.fromRGB(255, 255, 255)
     return Icon
 end
+--this is f*ucking bug
 
 -- Notif Sys
 
@@ -322,3 +323,4 @@ function Library:CreateWindow(hubName, iconId)
 end
 
 return Library
+
