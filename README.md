@@ -15,4 +15,4 @@ Ghost Lib UI is designed for developers who need a clean, dark-themed interface 
 To load the library into your project, use the following request:
 
 ```lua
-local Library = loadstring(game:HttpGet("[https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua](https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/main/GhostLibUi.lua)"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/refs/heads/main/GhostLibUi.lua)"))()
