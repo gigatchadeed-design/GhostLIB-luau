@@ -1,7 +1,7 @@
 # Ghost Lib UI 2.2
 **A high-performance, minimalist user interface library for Roblox.**
 
-![Ghost Lib UI Preview]([https://image.noelshack.com/fichiers/2026/02/6/1768082445-capture-d-cran-2026-01-10-230024.png](https://image.noelshack.com/fichiers/2026/02/7/1768140878-capture-d-cran-2026-01-11-151403.png))
+![Ghost Lib UI Preview]([http://www.image-heberg.fr/files/1768141137435630369.png))
 
 (The ui use the red theme)
 
