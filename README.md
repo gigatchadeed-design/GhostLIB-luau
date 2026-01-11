@@ -1,7 +1,7 @@
 # Ghost Lib UI 2.2
 **A high-performance, minimalist user interface library for Roblox.**
 
-![Ghost Lib UI Preview]([http://www.image-heberg.fr/files/1768141137435630369.png))
+![Ghost Lib UI Preview](http://www.image-heberg.fr/files/1768141137435630369.png)
 
 (The ui use the red theme)
 
@@ -31,3 +31,5 @@ To load the library into your project, use the following request:
 
 ```lua
 local Library = loadstring(game:HttpGet("[https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/refs/heads/main/GhostLibUi.lua](https://raw.githubusercontent.com/gigatchadeed-design/GhostLIB-luau/refs/heads/main/GhostLibUi.lua))"))()
+```
+Info: The dev is French! Some text may be poorly translated.
