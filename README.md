@@ -1,23 +1,28 @@
-# Ghost Lib UI
+# Ghost Lib UI 2.2
 **A high-performance, minimalist user interface library for Roblox.**
 
-![Ghost Lib UI Preview](https://image.noelshack.com/fichiers/2026/02/6/1768082445-capture-d-cran-2026-01-10-230024.png)
+![Ghost Lib UI Preview]([https://image.noelshack.com/fichiers/2026/02/6/1768082445-capture-d-cran-2026-01-10-230024.png](https://image.noelshack.com/fichiers/2026/02/7/1768140878-capture-d-cran-2026-01-11-151403.png))
+
+(The ui use the red theme)
 
 Ghost Lib UI is designed for developers who need a clean, dark-themed interface with smooth animations and a focus on performance. It utilizes TweenService for all transitions and provides a fully responsive layout.
 
 ---
 
-## Key Features
+
 * **Modern Aesthetics:** Sleek Anthracite design with smooth rounded corners (UICorner).
 * **Highly Responsive:** Elements adapt perfectly to different screen resolutions.
 * **Lightweight Core:** Built with performance in mind, ensuring zero frame drops during UI interactions.
 * **User Experience:** Includes built-in dragging systems and interactive hover effects.
+* **Theme:** in 2.2 we add some cool theme.
 
 ## Technical Specifications
 * **Core Engine:** Luau
-* **Visual Style:** Anthracite Dark Mode / Rounded (UICorner)
+* **Visual Style:** Anthracite Dark Mode Red theme, Ocean, Midnight / Rounded (UICorner)
 * **Performance:** Optimized for low-end devices with efficient Z-Index management.
 * **Navigation:** Draggable main frame and toggle system.
+* * **Coding:**  Completely OpenSource!
+    
 
 ## Integration
 To load the library into your project, use the following request:
